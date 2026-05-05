@@ -1,8 +1,24 @@
+import { lazy, Suspense } from "react";
 import { tools } from "./data/tools";
+
+const A6ToA4BookletTool = lazy(() =>
+  import("./tools/a6-to-a4-booklet-imposition/A6ToA4BookletTool").then((module) => ({
+    default: module.A6ToA4BookletTool
+  }))
+);
 
 const repoUrl = "https://github.com/tomiwo-ll/browser-toolbox";
 
 export function App() {
+  const currentRoute = currentToolRoute();
+  if (currentRoute === "/tools/a6-to-a4-booklet-imposition") {
+    return (
+      <Suspense fallback={<main className="app-shell">Loading tool...</main>}>
+        <A6ToA4BookletTool />
+      </Suspense>
+    );
+  }
+
   return (
     <main className="app-shell">
       <section className="intro" aria-labelledby="app-title">
@@ -24,7 +40,7 @@ export function App() {
       <section className="tool-section" aria-label="Tools">
         <div className="tool-grid">
           {tools.map((tool) => (
-            <article className="tool-card" key={tool.id}>
+            <a className="tool-card" href={toolHref(tool.path)} key={tool.id}>
               <div className="tool-card__header">
                 <h3>{tool.name}</h3>
                 <span className={`status status--${tool.status}`}>
@@ -42,10 +58,23 @@ export function App() {
                   <dd>{tool.outputTypes.join(" / ")}</dd>
                 </div>
               </dl>
-            </article>
+            </a>
           ))}
         </div>
       </section>
     </main>
   );
+}
+
+function currentToolRoute(): string {
+  if (window.location.hash.startsWith("#/")) {
+    return window.location.hash.slice(1);
+  }
+
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  return window.location.pathname.replace(base, "") || "/";
+}
+
+function toolHref(path: string): string {
+  return `${import.meta.env.BASE_URL}#${path}`;
 }

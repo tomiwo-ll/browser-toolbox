@@ -19,7 +19,7 @@ export const tools: ToolDefinition[] = [
     inputTypes: ["JPG", "PNG", "PDF"],
     outputTypes: ["PDF", "ZIP(JPG)"],
     path: "/tools/a6-to-a4-booklet-imposition",
-    status: "planned"
+    status: "available"
   },
   {
     id: "local-file-workbench",

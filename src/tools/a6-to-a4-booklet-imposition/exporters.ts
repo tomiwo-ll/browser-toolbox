@@ -66,7 +66,9 @@ async function exportPdf(
   }
 
   const bytes = await pdf.save();
-  return new Blob([bytes], { type: "application/pdf" });
+  const arrayBuffer = new ArrayBuffer(bytes.byteLength);
+  new Uint8Array(arrayBuffer).set(bytes);
+  return new Blob([arrayBuffer], { type: "application/pdf" });
 }
 
 async function exportZip(
