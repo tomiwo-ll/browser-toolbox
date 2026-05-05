@@ -1,1 +1,9 @@
 output/
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+*.log
+npm-debug.log*
+.DS_Store
