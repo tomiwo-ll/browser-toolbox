@@ -1,0 +1,43 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect app workspace
+        id: detect
+        shell: bash
+        run: |
+          if [[ -f package.json && ( -f docker-compose.yml || -f compose.yml ) ]]; then
+            echo "run_checks=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain skipped checks
+        if: steps.detect.outputs.run_checks != 'true'
+        run: echo "package.json と Docker Compose が未整備のため、アプリ検証をスキップします。"
+
+      - name: Lint
+        if: steps.detect.outputs.run_checks == 'true'
+        run: docker compose run --rm app npm run lint
+
+      - name: Typecheck
+        if: steps.detect.outputs.run_checks == 'true'
+        run: docker compose run --rm app npm run typecheck
+
+      - name: Test
+        if: steps.detect.outputs.run_checks == 'true'
+        run: docker compose run --rm app npm test
+
+      - name: Build
+        if: steps.detect.outputs.run_checks == 'true'
+        run: docker compose run --rm app npm run build

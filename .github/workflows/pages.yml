@@ -1,0 +1,60 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      deployable: ${{ steps.detect.outputs.deployable }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect deployable app
+        id: detect
+        shell: bash
+        run: |
+          if [[ -f package.json && ( -f docker-compose.yml || -f compose.yml ) ]]; then
+            echo "deployable=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deployable=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain skipped deploy
+        if: steps.detect.outputs.deployable != 'true'
+        run: echo "package.json と Docker Compose が未整備のため、GitHub Pages デプロイをスキップします。"
+
+      - name: Build static site
+        if: steps.detect.outputs.deployable == 'true'
+        run: docker compose run --rm app npm run build
+
+      - name: Upload Pages artifact
+        if: steps.detect.outputs.deployable == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: needs.build.outputs.deployable == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+if [ ! -f package.json ]; then
+  echo "pre-push: package.json がないため、アプリ検証をスキップします。"
+  exit 0
+fi
+
+if [ ! -f docker-compose.yml ] && [ ! -f compose.yml ]; then
+  echo "pre-push: Docker Compose 設定がないため、アプリ検証をスキップします。"
+  exit 0
+fi
+
+if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
+  docker compose run --rm app npm run build
+else
+  echo "pre-push: ローカル検証には docker compose が必要です。" >&2
+  exit 1
+fi
