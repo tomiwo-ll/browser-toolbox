@@ -7,7 +7,7 @@
 - 現在バージョン: 0.1.0
 - 作成日: 2026-05-06
 - 更新日: 2026-05-06
-- 関連ADR: ADR-001-a6-to-a4-imposition-rules.md
+- 関連ADR: ADR-001-a6-to-a4-imposition-rules.md, ADR-002-optional-final-page-preservation.md
 
 ## 目的
 
