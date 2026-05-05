@@ -10,14 +10,6 @@
 - 新しい依存関係を追加する前に確認する。
 - 破壊的操作、DBマイグレーション、外部API呼び出し、デプロイは確認なしに実行しない。
 
-## Docker-Only Local Work
-
-- `git` 操作を除くローカル作業、検証、スクリプト実行は必ず Docker 経由で行う。
-- ホストで直接実行してよいのは、`git status`、`git branch`、`git switch`、`git checkout`、`git diff`、`git add`、`git commit`、`git push` などの Git 操作のみ。
-- `npm`、`pnpm`、`node`、`python`、`cargo`、`pytest`、`playwright`、lint、test、typecheck、build はホストで直接実行しない。
-- Docker 環境が未整備の場合は、実装や検証の前に Dockerfile、Compose、または実行スクリプトの整備を計画する。
-- 標準コマンドは `docker compose run --rm app npm ...` または `docker compose exec app npm ...` に統一する。
-
 ## Browser Toolbox Rules
 
 - このリポジトリは GitHub Pages で公開する、ブラウザ上で処理が完結するツール置き場として扱う。
@@ -36,6 +28,18 @@
   - `.codex/skills/pdf-layout-tool/SKILL.md`: PDF、用紙、面付け、印刷レイアウト。
   - `.codex/skills/github-pages-release/SKILL.md`: GitHub Pages 公開、CI、PR前確認。
 
+## Documentation Policy
+
+- リポジトリ全体、共通仕様、共通運用についてのドキュメントは `docs/project/` に置く。
+- 特定ツール単体についてのドキュメントは `docs/tools/<tool-en-name>/` に置く。
+- 各ドキュメントディレクトリには、必要に応じて要件定義書、仕様書、トレーサビリティ確認表、ADR、その他補助資料を置く。
+- 要件定義書、仕様書、トレーサビリティ確認表、ADRは `docs/project/templates/` のテンプレートを使って作成する。
+- なんらかの意思決定を行った場合はADRを作成する。機能拡張や仕様変更では、基本的にADRを先に作成し、それをもとに既存の要件定義書、仕様書、トレーサビリティ確認表を更新する。
+- ADRファイル名は `ADR-XXX-<title>.md` とする。`XXX` はディレクトリごとの三桁ゼロ埋め連番、`<title>` は kebab-case とする。
+- 既存ADRは原則として編集しない。新しいADRを作成し、既存ADRとの関係を新ADR側に記載する。
+- 既存ADRが陳腐化する場合のみ、既存ADRに最小限の状態変更または参照追記を行い、どのADRに置き換えられたか分かる状態にする。
+- 要件や仕様を変更した場合は、変更履歴を各ドキュメント内に追記する。
+
 ## Feature Workflow
 
 1. 開発開始
@@ -44,8 +48,10 @@
    - 既存の未コミット変更がある場合は、今回の機能に含めるかを明示してから進める。
 
 2. ドキュメント用ディレクトリ作成
-   - Git 管理下の `docs/features/<yyyy-mm-dd>-<feature-slug>/` を作る。
-   - 最低限、`requirements.md`、`adr.md`、`spec.md`、`traceability.md` を作る。
+   - リポジトリ全体または共通仕様の作業では `docs/project/` を使う。
+   - 特定ツール単体の作業では `docs/tools/<tool-en-name>/` を作る。
+   - 最低限、要件定義書、仕様書、トレーサビリティ確認表を作る。
+   - 意思決定がある場合は `ADR-XXX-<title>.md` を作る。
    - 必要なら `notes.md` や `test-plan.md` を追加する。
    - GitHub Issue は議論やタスク追跡の補助として使ってよいが、要件、ADR、仕様の正本はリポジトリ内ドキュメントに置く。
 
@@ -55,7 +61,9 @@
    - 大容量ファイル、対応ブラウザ、失敗時の表示、ダウンロード成果物を要件に含める。
 
 4. ADR作成
-   - `adr.md` に背景、決定、採用しなかった案、影響を書く。
+   - `ADR-XXX-<title>.md` に背景、決定、採用しなかった案、影響、関連ADRを書く。
+   - 番号は同一ディレクトリ内の既存ADRを確認し、次の三桁ゼロ埋め連番にする。
+   - 既存ADRを直接書き換えず、新ADRで関係を示す。
    - PDF生成ライブラリ、画像処理方式、Web Worker採用有無、Pages配信方式など、後から迷いやすい判断を記録する。
 
 5. 仕様書作成
@@ -99,7 +107,7 @@
 ## Verification Expectations
 
 - ルール検証: Docker 必須ルールと Git 例外が明記されていることを確認する。
-- ドキュメント検証: 新機能ごとに `requirements.md`、`adr.md`、`spec.md`、`traceability.md` が存在することを確認する。
+- ドキュメント検証: 対象に応じて `docs/project/` または `docs/tools/<tool-en-name>/` に要件定義書、仕様書、トレーサビリティ確認表、必要なADRが存在することを確認する。
 - 突合検証: 要件と仕様、仕様と実装の突合がPR前に完了していることを確認する。
 - 開発検証: Docker 経由で lint、typecheck、test、build が成功することを確認する。
 - PR検証: PR本文に検証結果と残リスクが記載されていることを確認する。

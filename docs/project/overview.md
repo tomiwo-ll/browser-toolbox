@@ -21,6 +21,14 @@
 - ツール定義は入力形式、出力形式、状態、パスを持つ。
 - UI、処理ロジック、テストデータは機能単位で分離する。
 
+## ドキュメント構造
+
+- リポジトリ全体、共通仕様、共通運用についてのドキュメントは `docs/project/` に置く。
+- 特定ツール単体についてのドキュメントは `docs/tools/<tool-en-name>/` に置く。
+- 要件定義書、仕様書、トレーサビリティ確認表、ADRは `docs/project/templates/` のテンプレートを使って作成する。
+- ADRはディレクトリごとに `ADR-XXX-<title>.md` 形式で管理する。番号は三桁ゼロ埋め連番、タイトルは kebab-case とする。
+- 既存ADRは原則編集せず、新しいADRで変更理由と既存ADRとの関係を示す。
+
 ## GitHub Pages
 
 - GitHub Actions で build と deploy を行う。
