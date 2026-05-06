@@ -20,16 +20,6 @@ export const tools: ToolDefinition[] = [
     outputTypes: ["PDF", "ZIP(JPG)"],
     path: "/tools/a6-to-a4-booklet-imposition",
     status: "available"
-  },
-  {
-    id: "local-file-workbench",
-    name: "ローカルファイル処理",
-    summary:
-      "画像、PDF、テキスト、CSVなどを外部送信せずに加工するツール群の受け皿です。",
-    inputTypes: ["画像", "PDF", "テキスト", "CSV"],
-    outputTypes: ["PDF", "画像", "テキスト", "CSV", "ZIP"],
-    path: "/tools",
-    status: "planned"
   }
 ];
 
