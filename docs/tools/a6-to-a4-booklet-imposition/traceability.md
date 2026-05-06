@@ -7,7 +7,7 @@
 - 現在バージョン: 0.1.0
 - 作成日: 2026-05-06
 - 更新日: 2026-05-06
-- 関連ADR: ADR-001-a6-to-a4-imposition-rules.md, ADR-002-optional-final-page-preservation.md, ADR-003-physical-sheet-padding.md
+- 関連ADR: ADR-001-a6-to-a4-imposition-rules.md, ADR-002-optional-final-page-preservation.md, ADR-003-physical-sheet-padding.md, ADR-004-guide-lines-over-content.md
 
 ## 要件 -> 仕様 -> 実装
 
@@ -25,6 +25,7 @@
 | REQ-010 | SPEC-BEH-008 | `exporters.ts` | TEST-001 | 実装済み |  |
 | REQ-011 | SPEC-BEH-008 | `exporters.ts` | TEST-001 | 実装済み |  |
 | REQ-012 | SPEC-BEH-009 | `exporters.ts` | TEST-009 | 実装済み |  |
+| REQ-012A | SPEC-BEH-009 | `requirements.md`, `spec.md` | 手動確認 | 実装済み | 入力ページ作成側の前提として明記 |
 | REQ-013 | SPEC-BEH-007, SPEC-BEH-009 | `exporters.ts` | TEST-001, TEST-009 | 実装済み |  |
 | REQ-014 | SPEC-BEH-003 | `imposition.ts` | TEST-003 | 実装済み |  |
 | REQ-015 | SPEC-BEH-004 | `imposition.ts`, `A6ToA4BookletTool.tsx` | TEST-004 | 実装済み |  |
@@ -60,3 +61,4 @@
 | 2026-05-06 | 初版 | ADR-001-a6-to-a4-imposition-rules.md |
 | 2026-05-06 | 最終ページ保持を既定動作からユーザー選択オプションへ変更 | ADR-002-optional-final-page-preservation.md |
 | 2026-05-06 | 実装パスと物理シート補完を反映 | ADR-003-physical-sheet-padding.md |
+| 2026-05-06 | ガイド線を画像手前へ描画する方針へ変更 | ADR-004-guide-lines-over-content.md |

@@ -104,7 +104,6 @@ export function renderSheetSide(
 
   context.fillStyle = "#ffffff";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  drawGuides(context);
 
   drawSlot(context, sourcePages, side.placement.topLeft, 0, centerY() - A6_SIZE_PX.height, false);
   drawSlot(
@@ -117,6 +116,7 @@ export function renderSheetSide(
   );
   drawSlot(context, sourcePages, side.placement.bottomLeft, 0, centerY(), true);
   drawSlot(context, sourcePages, side.placement.bottomRight, centerX(), centerY(), true);
+  drawGuides(context);
 
   return canvas;
 }
