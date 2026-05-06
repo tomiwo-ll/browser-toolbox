@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { tools } from "./data/tools";
 
 const A6ToA4BookletTool = lazy(() =>
@@ -10,7 +10,7 @@ const A6ToA4BookletTool = lazy(() =>
 const repoUrl = "https://github.com/tomiwo-ll/browser-toolbox";
 
 export function App() {
-  const currentRoute = currentToolRoute();
+  const currentRoute = useCurrentRoute();
   if (currentRoute === "/tools/a6-to-a4-booklet-imposition") {
     return (
       <Suspense fallback={<main className="app-shell">Loading tool...</main>}>
@@ -64,6 +64,22 @@ export function App() {
       </section>
     </main>
   );
+}
+
+function useCurrentRoute(): string {
+  const [route, setRoute] = useState(currentToolRoute);
+
+  useEffect(() => {
+    const updateRoute = () => setRoute(currentToolRoute());
+    window.addEventListener("hashchange", updateRoute);
+    window.addEventListener("popstate", updateRoute);
+    return () => {
+      window.removeEventListener("hashchange", updateRoute);
+      window.removeEventListener("popstate", updateRoute);
+    };
+  }, []);
+
+  return route;
 }
 
 function currentToolRoute(): string {

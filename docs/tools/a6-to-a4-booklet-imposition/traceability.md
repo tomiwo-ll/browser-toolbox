@@ -34,6 +34,7 @@
 | REQ-018 | SPEC-BEH-011, SPEC-ERR-006 | `A6ToA4BookletTool.tsx` | TEST-011 | 実装済み | メモリ不足はRangeErrorとして表示 |
 | REQ-019 | 概要, 制約 | `fileInput.ts`, `exporters.ts`, `A6ToA4BookletTool.tsx` | 手動確認 | 実装済み | 外部送信する処理は追加していない |
 | REQ-020 | SPEC-BEH-004A | `imposition.ts` | TEST-004A | 実装済み | A4両面シート用に8ページ単位へ内部補完 |
+| ROUTE-001 | 画面 / UI | `App.tsx`, `A6ToA4BookletTool.tsx` | TEST-012 | 実装済み | トップからツールへ遷移し、Toolsリンクで戻る |
 
 ## バージョン確認
 
@@ -62,3 +63,4 @@
 | 2026-05-06 | 最終ページ保持を既定動作からユーザー選択オプションへ変更 | ADR-002-optional-final-page-preservation.md |
 | 2026-05-06 | 実装パスと物理シート補完を反映 | ADR-003-physical-sheet-padding.md |
 | 2026-05-06 | ガイド線を画像手前へ描画する方針へ変更 | ADR-004-guide-lines-over-content.md |
+| 2026-05-06 | 画面遷移検証を必須確認として追加 | なし |
