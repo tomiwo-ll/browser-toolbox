@@ -105,7 +105,23 @@ export function A6ToA4BookletTool() {
           <p className="tool-version">v{a6ToA4BookletMetadata.version}</p>
           <h1 id="tool-title">{a6ToA4BookletMetadata.name}</h1>
           <p className="lead">
-            A6冊子向けのJPG、PNG、PDFを、A4縦・両面印刷・長辺とじ用に面付けします。
+            A6サイズのページ画像を、A4用紙へまとめて配置するための面付けツールです。
+          </p>
+          <p className="tool-description">
+            A6サイズで作成した同人誌を、A4用紙に面付けしてコピー本として印刷できる状態にします。A6-&gt;A5サイズの冊子オプションをサポートしていない一般的なコンビニプリンターでも、A6冊子を作成できます。
+          </p>
+          <p className="tool-description">
+            A4の上下それぞれにA6冊子用のページが並べられ、印刷後は用紙の中央のガイド線に沿って真ん中で裁断し、
+            ホチキス留めや折り作業を行う想定です。ガイド線を基準にページ位置を整えるため、下段のページは上下反転して配置されます。
+          </p>
+          <p className="tool-description">
+            出力したPDFまたはZIP(JPG)をA4縦、両面印刷、長辺とじ、倍率100%で印刷してください。
+          </p>
+          <ul className="tool-description-list">
+            <li>ページ数が足りない場合は、冊子として成立するように白紙ページを補完します。</li>
+            <li>出力物のサイズはA4縦(210mm x 297mm)、300dpi相当です。</li>
+          </ul>
+          <p className="tool-description">
             処理はブラウザ内で完結し、入力内容を外部へ送信、保存しません。
           </p>
         </div>
@@ -178,6 +194,9 @@ export function A6ToA4BookletTool() {
             />
             最終ページを冊子の最終ページに置く
           </label>
+          <p className="option-help">
+            補完用の白紙ページが最終ページの前に挿入されるようになります
+          </p>
 
           <div className="print-note">
             A4縦、両面印刷、長辺とじ、倍率100%、自動拡大縮小なしで印刷してください。
