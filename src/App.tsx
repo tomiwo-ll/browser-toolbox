@@ -1,8 +1,25 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import { tools } from "./data/tools";
+import { currentToolRouteFromLocation, toolHref } from "./routing";
+
+const A6ToA4BookletTool = lazy(() =>
+  import("./tools/a6-to-a4-booklet-imposition/A6ToA4BookletTool").then((module) => ({
+    default: module.A6ToA4BookletTool
+  }))
+);
 
 const repoUrl = "https://github.com/tomiwo-ll/browser-toolbox";
 
 export function App() {
+  const currentRoute = useCurrentRoute();
+  if (currentRoute === "/tools/a6-to-a4-booklet-imposition") {
+    return (
+      <Suspense fallback={<main className="app-shell">Loading tool...</main>}>
+        <A6ToA4BookletTool />
+      </Suspense>
+    );
+  }
+
   return (
     <main className="app-shell">
       <section className="intro" aria-labelledby="app-title">
@@ -24,7 +41,11 @@ export function App() {
       <section className="tool-section" aria-label="Tools">
         <div className="tool-grid">
           {tools.map((tool) => (
-            <article className="tool-card" key={tool.id}>
+            <a
+              className="tool-card"
+              href={toolHref(tool.path, import.meta.env.BASE_URL)}
+              key={tool.id}
+            >
               <div className="tool-card__header">
                 <h3>{tool.name}</h3>
                 <span className={`status status--${tool.status}`}>
@@ -42,10 +63,30 @@ export function App() {
                   <dd>{tool.outputTypes.join(" / ")}</dd>
                 </div>
               </dl>
-            </article>
+            </a>
           ))}
         </div>
       </section>
     </main>
   );
+}
+
+function useCurrentRoute(): string {
+  const [route, setRoute] = useState(currentToolRoute);
+
+  useEffect(() => {
+    const updateRoute = () => setRoute(currentToolRoute());
+    window.addEventListener("hashchange", updateRoute);
+    window.addEventListener("popstate", updateRoute);
+    return () => {
+      window.removeEventListener("hashchange", updateRoute);
+      window.removeEventListener("popstate", updateRoute);
+    };
+  }, []);
+
+  return route;
+}
+
+function currentToolRoute(): string {
+  return currentToolRouteFromLocation(window.location, import.meta.env.BASE_URL);
 }

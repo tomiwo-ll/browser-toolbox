@@ -14,4 +14,16 @@ describe("tools registry", () => {
     expect(outputTypes.has("PDF")).toBe(true);
     expect(outputTypes.size).toBeGreaterThan(1);
   });
+
+  it("includes the A6 to A4 booklet imposition tool", () => {
+    expect(tools).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "a6-to-a4-booklet-imposition",
+          inputTypes: expect.arrayContaining(["JPG", "PNG", "PDF"]),
+          outputTypes: expect.arrayContaining(["PDF", "ZIP(JPG)"])
+        })
+      ])
+    );
+  });
 });
