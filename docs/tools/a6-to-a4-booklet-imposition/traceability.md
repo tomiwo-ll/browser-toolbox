@@ -4,7 +4,7 @@
 
 - 対象: A6 to A4 Booklet Imposition
 - 種別: tool
-- 現在バージョン: 0.1.0
+- 現在バージョン: 1.0.0
 - 作成日: 2026-05-06
 - 更新日: 2026-05-06
 - 関連ADR: ADR-001-a6-to-a4-imposition-rules.md, ADR-002-optional-final-page-preservation.md, ADR-003-physical-sheet-padding.md, ADR-004-guide-lines-over-content.md
@@ -40,8 +40,8 @@
 
 | 確認項目 | 仕様ID | 実装箇所 | 状態 | 備考 |
 | --- | --- | --- | --- | --- |
-| 現在バージョンが仕様と実装メタデータで一致している | バージョン / 更新履歴表示 | `src/tools/a6-to-a4-booklet-imposition/metadata.ts` | 実装済み | 0.1.0 |
-| ページ表示用更新履歴が仕様と実装メタデータで一致している | バージョン / 更新履歴表示 | `src/tools/a6-to-a4-booklet-imposition/metadata.ts` | 実装済み | 0.1.0初期版 |
+| 現在バージョンが仕様と実装メタデータで一致している | バージョン / 更新履歴表示 | `src/tools/a6-to-a4-booklet-imposition/metadata.ts` | 実装済み | 1.0.0 |
+| ページ表示用更新履歴が仕様と実装メタデータで一致している | バージョン / 更新履歴表示 | `src/tools/a6-to-a4-booklet-imposition/metadata.ts` | 実装済み | 1.0.0公開版、0.1.0初期版 |
 
 ## 不整合
 
@@ -65,3 +65,4 @@
 | 2026-05-06 | ガイド線を画像手前へ描画する方針へ変更 | ADR-004-guide-lines-over-content.md |
 | 2026-05-06 | 画面遷移検証を必須確認として追加 | なし |
 | 2026-05-06 | 画面遷移のbaseパス対応を自動テストに追加 | なし |
+| 2026-05-06 | 公開版として1.0.0へ更新 | なし |
