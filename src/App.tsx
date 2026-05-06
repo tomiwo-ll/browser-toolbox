@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { tools } from "./data/tools";
+import { currentToolRouteFromLocation, toolHref } from "./routing";
 
 const A6ToA4BookletTool = lazy(() =>
   import("./tools/a6-to-a4-booklet-imposition/A6ToA4BookletTool").then((module) => ({
@@ -40,7 +41,11 @@ export function App() {
       <section className="tool-section" aria-label="Tools">
         <div className="tool-grid">
           {tools.map((tool) => (
-            <a className="tool-card" href={toolHref(tool.path)} key={tool.id}>
+            <a
+              className="tool-card"
+              href={toolHref(tool.path, import.meta.env.BASE_URL)}
+              key={tool.id}
+            >
               <div className="tool-card__header">
                 <h3>{tool.name}</h3>
                 <span className={`status status--${tool.status}`}>
@@ -83,14 +88,5 @@ function useCurrentRoute(): string {
 }
 
 function currentToolRoute(): string {
-  if (window.location.hash.startsWith("#/")) {
-    return window.location.hash.slice(1);
-  }
-
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-  return window.location.pathname.replace(base, "") || "/";
-}
-
-function toolHref(path: string): string {
-  return `${import.meta.env.BASE_URL}#${path}`;
+  return currentToolRouteFromLocation(window.location, import.meta.env.BASE_URL);
 }
